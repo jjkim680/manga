@@ -1,6 +1,7 @@
+import time
+import random
 from cubari_5apps_client import fetch_cubari_data
 from weebcentral_client import fetch_slug_from_title, is_read
-
 
 # title = input("Type title")
 # code = fetch_slug_from_title(title)
