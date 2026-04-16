@@ -42,6 +42,5 @@ def main():
     else:
         print("Could not find the manga link on this page.")
 
-
 if __name__ == "__main__":
     main()
