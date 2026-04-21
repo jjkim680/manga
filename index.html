@@ -32,7 +32,7 @@
                     const imageClass = isRead === false ? 'grayscale' : '';
 
                     bubble.innerHTML = `
-                        <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover">
+                        <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
                         <div class="manga-info">
                             <h3>${manga.title || 'Unknown Title'}</h3>
                         </div>
