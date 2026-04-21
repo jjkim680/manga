@@ -61,3 +61,9 @@ def is_read(manga_dict):
         return False
     else:
         return True
+    
+
+if __name__ == "__main__":
+    title = "one punch man"
+    fetch_slug_from_title(title)
+    # is_read()
