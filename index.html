@@ -4,62 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manga Tracker</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px;
-        }
-        h1 { text-align: center; margin-bottom: 40px; }
-        
-        /* The Grid */
-        .manga-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* The Bubble Card */
-        .manga-bubble {
-            background: #1e1e1e;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
-            position: relative;
-        }
-        .manga-bubble:hover { transform: translateY(-5px); }
-        
-        .manga-bubble img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-bottom: 3px solid #333;
-        }
-
-        .manga-info { padding: 15px; }
-        .manga-info h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
-        .manga-info p { margin: 0; color: #aaa; font-size: 0.9rem; }
-
-        /* The Notification Badge */
-        .unread-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4757;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .hidden { display: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -81,9 +26,11 @@
                     bubble.className = 'manga-bubble';
                     
                     // Determine if we need to show the unread badge
-                    const unreadCount = manga.unread_chapters || 0;
-                    const badgeClass = unreadCount > 0 ? 'unread-badge' : 'unread-badge hidden';
-                    
+                    const isRead = manga.caught_up || 0;
+                                        
+                    // If 0 unread, apply grayscale. Otherwise, no extra class.
+                    const imageClass = isRead === 0 ? 'grayscale' : '';
+
                     bubble.innerHTML = `
                         <div class="${badgeClass}"> New</div>
                         <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover">
