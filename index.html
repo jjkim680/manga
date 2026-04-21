@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <h1>My Manga Library</h1>
     <div class="manga-grid" id="grid"></div>
 
     <script>
@@ -26,7 +25,7 @@
                     const isRead = manga.caught_up;
                                         
                     // If isRead is false, apply grayscale. Otherwise, no extra class.
-                    const imageClass = isRead === false ? 'grayscale' : '';
+                    const imageClass = isRead === true ? 'grayscale' : '';
 
                     bubble.innerHTML = `
                         <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
