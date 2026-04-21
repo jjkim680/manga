@@ -26,10 +26,10 @@
                     bubble.className = 'manga-bubble';
                     
                     // Determine if we need to show the unread badge
-                    const isRead = manga.caught_up || 0;
+                    const isRead = manga.caught_up || true;
                                         
-                    // If 0 unread, apply grayscale. Otherwise, no extra class.
-                    const imageClass = isRead === 0 ? 'grayscale' : '';
+                    // If isRead is false, apply grayscale. Otherwise, no extra class.
+                    const imageClass = isRead === false ? 'grayscale' : '';
 
                     bubble.innerHTML = `
                         <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover">
