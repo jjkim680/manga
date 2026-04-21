@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from cubari_5apps_client import fetch_cubari_data
 import numpy as np
 from bs4 import BeautifulSoup
 from api_client import fetch_data
