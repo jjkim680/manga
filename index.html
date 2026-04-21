@@ -74,7 +74,8 @@
                 const grid = document.getElementById('grid');
                 
                 // Loop through each manga in your library
-                data.forEach(manga => {
+                // This forces the dictionary to become an array of manga objects
+                Object.values(data).forEach(manga => {
                     // Create the HTML for the bubble
                     const bubble = document.createElement('div');
                     bubble.className = 'manga-bubble';
@@ -84,11 +85,10 @@
                     const badgeClass = unreadCount > 0 ? 'unread-badge' : 'unread-badge hidden';
                     
                     bubble.innerHTML = `
-                        <div class="${badgeClass}">${unreadCount} New</div>
-                        <img src="${manga.cover_url || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover">
+                        <div class="${badgeClass}"> New</div>
+                        <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover">
                         <div class="manga-info">
                             <h3>${manga.title || 'Unknown Title'}</h3>
-                            <p>Latest: Ch. ${manga.latest_chapter || '?'}</p>
                         </div>
                     `;
                     grid.appendChild(bubble);
