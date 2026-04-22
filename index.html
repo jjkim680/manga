@@ -28,7 +28,7 @@
                     const imageClass = isRead === true ? 'grayscale' : '';
 
                     bubble.innerHTML = `
-                        <a href=https://cubari.moe/read/weebcentral/${manga.slug}/>
+                        <a href="https://cubari.moe/read/weebcentral/${manga.slug}/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
                             <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
                             <div class="manga-info">
                                 <h3>${manga.title || 'Unknown Title'}</h3>
