@@ -28,10 +28,12 @@
                     const imageClass = isRead === true ? 'grayscale' : '';
 
                     bubble.innerHTML = `
-                        <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
-                        <div class="manga-info">
-                            <h3>${manga.title || 'Unknown Title'}</h3>
-                        </div>
+                        <a href=https://cubari.moe/read/weebcentral/${manga.slug}/>
+                            <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
+                            <div class="manga-info">
+                                <h3>${manga.title || 'Unknown Title'}</h3>
+                            </div>
+                        </a>
                     `;
                     grid.appendChild(bubble);
                 });
