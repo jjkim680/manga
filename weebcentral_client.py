@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import numpy as np
-from bs4 import BeautifulSoup
 from api_client import fetch_data
 
 

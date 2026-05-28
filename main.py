@@ -4,16 +4,9 @@ from cubari_5apps_client import fetch_cubari_data
 from weebcentral_client import fetch_slug_from_title, is_read
 import platform
 import json
+import os
 
 def read_manga():
-    manga_titles = []
-    # manga_covers = []
-    unread = []
-
-    # title = input("Type title")
-    # code = fetch_slug_from_title(title)
-    # print(code)
-
     manga_data = fetch_cubari_data()
 
     for manga_dict in manga_data.values():

@@ -5,40 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manga Tracker</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
+    <!-- Load icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- The form -->
+    <form class="example" action="action_page.php">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit" id="searchButton"><i class="fa fa-search"></i></button>
+    </form>
+
     <div class="manga-grid" id="grid"></div>
 
-    <script>
-        // Fetch the JSON file your Python script generated
-        fetch('manga_data.json')
-            .then(response => response.json())
-            .then(data => {
-                const grid = document.getElementById('grid');
-
-                // Force the dictionary to become an array of manga objects
-                Object.values(data).forEach(manga => {
-                    const bubble = document.createElement('div');
-                    bubble.className = 'manga-bubble';
-                    
-                    const isRead = manga.caught_up;
-                                        
-                    // If isRead is false, apply grayscale. Otherwise, no extra class.
-                    const imageClass = isRead === true ? 'grayscale' : '';
-
-                    bubble.innerHTML = `
-                        <a href="https://cubari.moe/read/weebcentral/${manga.slug}/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                            <img src="${manga.coverUrl || 'https://via.placeholder.com/200x280?text=No+Cover'}" alt="Cover", class="${imageClass}">
-                            <div class="manga-info">
-                                <h3>${manga.title || 'Unknown Title'}</h3>
-                            </div>
-                        </a>
-                    `;
-                    grid.appendChild(bubble);
-                });
-            })
-            .catch(error => console.error('Error loading manga data:', error));
-    </script>
 </body>
 </html>
