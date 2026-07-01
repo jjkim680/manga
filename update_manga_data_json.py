@@ -5,6 +5,10 @@ from weebcentral_client import fetch_slug_from_title, is_read
 import platform
 import json
 import os
+import sys
+
+# This forces the script to execute relative to the file's actual location
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def update_manga_data_json():
     # 1. Dynamically find the exact folder this Python script lives in
