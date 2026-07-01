@@ -24,11 +24,11 @@ def update_manga_data_json():
             manga_dict.pop("chapters")
             manga_dict["caught_up"] = is_read(manga_dict=manga_dict)
         
-    print(manga_data)
 
     # Saved into json file for webpage to use
     with open(save_path, 'w', encoding='utf-8') as f:
         json.dump(manga_data, f, ensure_ascii=False, indent=4)
+    print("Finished saving manga data")
 
 
 if __name__ == "__main__":
