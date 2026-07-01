@@ -3,6 +3,7 @@ import time
 import random
 from dotenv import load_dotenv
 from api_client import fetch_data
+import json
 
 def get_dotenv():
     load_dotenv()
@@ -46,9 +47,7 @@ def fetch_manga_data(account_name: str, headers: dict, manga_code: str) -> dict:
     return filter_manga_data(response.json())
 
 
-def fetch_cubari_data() -> dict:
-    global manga_data
-
+def fetch_cubari_data(save_path) -> dict:
     ACCOUNT_NAME, API_TOKEN = get_dotenv()
 
     headers = {
@@ -56,20 +55,27 @@ def fetch_cubari_data() -> dict:
         "origin": "https://cubari.moe",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0"
     }
+    
+    try:
+        with open(save_path, 'r', encoding='utf-8') as file:
+            manga_data_dict = json.load(file)
+    except FileNotFoundError:
+        print("Old Data does not exist. Creating new blank manga_data_dict")
+        manga_data_dict = {} 
 
+    # Create fetch
     # Fetch series data, then for each series, fetch its manga data, and use that data to fill in manga_data
     series_data = fetch_series_data(ACCOUNT_NAME, headers)
     manga_keys = list(series_data.keys())
-    manga_data = dict()
 
     for manga_key in manga_keys:
-        time.sleep(random.uniform(0.5, 3.5))
-        manga_data[manga_key] = fetch_manga_data(ACCOUNT_NAME, headers, manga_code=manga_key)
-        print(f"Fetched manga data for: {manga_data.get(manga_key).get('title')}")
+        if manga_data_dict.get(manga_key) is None or not manga_data_dict.get(manga_key).get("caught_up"): # does not exist in old data or not caught up
+            time.sleep(random.uniform(0.5, 3.5))
+            manga_data_dict[manga_key] = fetch_manga_data(ACCOUNT_NAME, headers, manga_code=manga_key)
+            manga = manga_data_dict.get(manga_key)
+            if manga.get("url") is None:
+                manga["url"] = f'https://cubari.moe/read/weebcentral/{manga.get("slug")}/'
+            print(f"Fetched manga data for: {manga.get('title')}")
 
     print("Finished fetching manga data")
-    return manga_data
-    
-    
-if __name__ == "__main__":
-    fetch_cubari_data()
+    return manga_data_dict

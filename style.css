@@ -96,3 +96,7 @@ form.example::after {
   clear: both;
   display: table;
 }
+
+#searchButton {
+    margin-left: 10px; /* Increase or decrease this number to adjust the space */
+}

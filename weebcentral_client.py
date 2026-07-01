@@ -37,14 +37,7 @@ def is_read(manga_dict):
     response = fetch_data(url=url, headers=HEADERS)
 
     # manga_dict['chapters'] = ['85', '84', '83'...]
-    local_chapters = manga_dict.get("chapters", [])
-
-    # Find highest read index or return 0
-    if local_chapters:
-        highest_read_index = np.array(local_chapters).astype(int).max()
-    else:
-        highest_read_index = 0
-
+    local_chapters_read = manga_dict["read_chapter_count"]
 
     soup = BeautifulSoup(response.text, 'html.parser')
     
@@ -55,7 +48,7 @@ def is_read(manga_dict):
     total_remote_chapters = len(remote_links)
     
     # Compare
-    if total_remote_chapters > highest_read_index:
+    if total_remote_chapters > local_chapters_read:
         return False
     else:
         return True
