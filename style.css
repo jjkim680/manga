@@ -1,24 +1,24 @@
 body { margin: 0; background-color: #1a1a1a; color: white; font-family: sans-serif; }
-  #chart-container { 
-    width: 100vw; 
-    height: 100vh; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-  }
-  .node { 
-    cursor: grab; 
-    stroke: #222; 
-    stroke-width: 2px; 
-    transition: filter 0.3s ease; 
-  }
-  .node:active { 
-    cursor: grabbing; 
-  }
-  .node:hover {
-    stroke: white; /* Highlights the bubble when hovering */
-    cursor: pointer; /* Changes the hand icon to a clicking pointer */
-  }
+#chart-container { 
+  width: 100vw; 
+  height: 100vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+.node { 
+  cursor: grab; 
+  stroke: #222; 
+  stroke-width: 2px; 
+  transition: filter 0.3s ease; 
+}
+.node:active { 
+  cursor: grabbing; 
+}
+.node:hover {
+  stroke: white; /* Highlights the bubble when hovering */
+  cursor: pointer; /* Changes the hand icon to a clicking pointer */
+}
 
 h1 { text-align: center; margin-bottom: 40px; }
 
