@@ -22,6 +22,16 @@ body { margin: 0; background-color: #1a1a1a; color: white; font-family: sans-ser
 
 h1 { text-align: center; margin-bottom: 40px; }
 
+/* Position the form wrapper at the top of the screen */
+form.example {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000; /* Keeps the search bar layered on top of your chart nodes */
+}
+
 /* Style the search field */
 form.example input[type=text] {
   padding: 10px;
@@ -30,6 +40,7 @@ form.example input[type=text] {
   float: left;
   width: 80%;
   background: #f1f1f1;
+  box-sizing: border-box; /* Prevents padding from breaking the 80% width */
 }
 
 /* Style the submit button */
@@ -43,7 +54,16 @@ form.example button {
   border: 1px solid grey;
   border-left: none; /* Prevent double borders */
   cursor: pointer;
+  box-sizing: border-box; /* Prevents padding from breaking the 20% width */
 }
+
+/* Optional: Clear floats so layout behaves correctly */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 
 form.example button:hover {
   background: #0b7dda;

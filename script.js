@@ -103,49 +103,31 @@ d3.json("manga_data.json").then(rawDictionary => {
 });
 
 async function fetchData(query) {
-    // Uses Weebcentral API to get mangaID from search query
     try {
-        // Encode the query to handle spaces and special characters safely
         const encodedQuery = encodeURIComponent(query);
-        const response = await fetch(`https://weebcentral.com/search/data?author=&text=${encodedQuery}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display`);
         
-        if (!response.ok) throw new Error('Request failed');
-        const htmlString = await response.text();
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlString, 'text/html');
-
-        // FIX 1: Find the specific container holding the series links to avoid picking up header/nav links
-        const anchorTag = doc.querySelector('a[href*="/series/"]');
-
-        // FIX 2: Check if an anchor tag was actually found to prevent "cannot read properties of null" errors
-        if (!anchorTag) {
-            throw new Error("No manga links found in the search results.");
+        // Target your local Flask endpoint
+        const response = await fetch(`http://127.0.0{encodedQuery}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Server error');
         }
-
-        // FIX 3: Changed 'firstAnchor' to matches your defined variable 'anchorTag'
-        const url = anchorTag.getAttribute('href'); 
         
-        if (!url) throw new Error("Link target is empty.");
-
-        // https://weebcentral.com/series/01J76XYFPF0C74JMR2H1MTQ2MR/Look-Back
-        const urlParts = url.split("/");
+        const data = await response.json(); 
+        const mangaID = data.mangaID;
         
-        // The ID is the 5th element in a standard split array
-        const mangaID = urlParts[4]; 
-
-        if (!mangaID) throw new Error("Could not extract ID from URL structure.");
-
-        console.log(`Success! The extracted Manga ID is: ${mangaID}`);
+        console.log(`Success! Python extracted the Manga ID: ${mangaID}`);
         
-        // Return it so you can use it in other functions
+        // Move to your layout/chart logic
+        renderMangaData(mangaID);
         return mangaID;
 
     } catch (error) {
-        console.error('Error:', error.message);
-        console.log("Could not find the manga link on this page.");
+        console.error('Frontend Error:', error.message);
     }  
 }
+
 
 
 // Identify HTML elements (Added the form element)
