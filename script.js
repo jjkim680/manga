@@ -118,15 +118,8 @@ async function fetchData(query) {
         const mangaID = data.mangaID;
         
         console.log(`Success! Python extracted the Manga ID: ${mangaID}`);
-        
-        // 1. Construct the secure Cubari reader URL using the mangaID
-        const cubariUrl = `https://cubari.moe/read/weebcentral/${mangaID}/`;
-        
-        // 2. Open the structured Cubari link directly in a new browser tab
-        window.open(cubariUrl, '_blank');
-        
+                
         return mangaID;
-
     } catch (error) {
         console.error('Frontend Error:', error.message);
     }  
@@ -145,9 +138,24 @@ function handleSearch(event) {
 
     // 2. Extract the text that is in the search bar
     const searchText = searchBar.value; 
-    
-    // 3. Run your fetch function
-    fetchData(searchText); 
+
+    try {
+        // 3. Run your fetch function and wait for the manga ID
+        const mangaID = await fetchData(searchText); 
+        
+        if (mangaID) {
+            // 5. Update the blank tab with the real Cubari URL
+            newTab.location.href = `https://cubari.moe/read/weebcentral/${mangaID}/`;
+        } else {
+            // If the manga isn't found, close the tab and let the user know
+            newTab.close();
+            alert('Manga not found. Please try another search.');
+        }
+    } catch (error) {
+        newTab.close();
+        console.error('Search Handler Error:', error);
+    }
+}
 }
 
 // Attach the listener to the FORM submit event, not the button click
