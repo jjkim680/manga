@@ -69,13 +69,12 @@ def fetch_cubari_data(save_path) -> dict:
     manga_keys = list(series_data.keys())
 
     for manga_key in manga_keys:
-        if manga_data_dict.get(manga_key) is None or not manga_data_dict.get(manga_key).get("caught_up"): # does not exist in old data or not caught up
-            time.sleep(random.uniform(0.5, 3.5))
-            manga_data_dict[manga_key] = fetch_manga_data(ACCOUNT_NAME, headers, manga_code=manga_key)
-            manga = manga_data_dict.get(manga_key)
-            if manga.get("url") is None:
-                manga["url"] = f'https://cubari.moe/read/weebcentral/{manga.get("slug")}/'
-            print(f"Fetched manga data for: {manga.get('title')}")
+        time.sleep(random.uniform(0.5, 3.5))
+        manga_data_dict[manga_key] = fetch_manga_data(ACCOUNT_NAME, headers, manga_code=manga_key)
+        manga = manga_data_dict.get(manga_key)
+        if manga.get("url") is None:
+            manga["url"] = f'https://cubari.moe/read/weebcentral/{manga.get("slug")}/'
+        print(f"Fetched manga data for: {manga.get('title')}")
 
     print("Finished fetching manga data")
     return manga_data_dict
