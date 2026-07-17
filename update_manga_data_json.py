@@ -25,7 +25,7 @@ def update_manga_data_json():
         if not manga_dict.get("caught_up"):
             time.sleep(random.uniform(0.5, 3.5))
             # Convert chapters list into read chapter count
-            if manga_dict.get("chapters", default=None) is not None:
+            if manga_dict.get("chapters", None) is not None:
                 manga_dict["read_chapter_count"] = len(manga_dict["chapters"])
                 manga_dict.pop("chapters")
             manga_dict["caught_up"] = is_read(manga_dict=manga_dict)
