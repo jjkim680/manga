@@ -18,7 +18,7 @@ def search_manga():
     try:
         # 2. Safely URL-encode the search query text
         encoded_query = urllib.parse.quote(query)
-        url = f"https://weebcentral.com{encoded_query}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display"
+        url = f'https://weebcentral.com/search/data?author=&text={encoded_query}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display'
         
         # 3. Perform the GET request (CORS restrictions do not apply to Python servers)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'} 
