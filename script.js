@@ -125,37 +125,35 @@ async function fetchData(query) {
     }  
 }
 
-
-
-// Identify HTML elements (Added the form element)
+// Identify HTML elements
 const searchForm = document.getElementById('searchForm');
 const searchBar = document.getElementById('searchBar');
 
-// Handle the search event safely
-function handleSearch(event) {
-    // 1. Prevent the form from reloading the page (fixes Enter key bug)
+// 1. Add 'async' to the function so you can use 'await' inside it
+async function handleSearch(event) {
     event.preventDefault(); 
 
-    // 2. Extract the text that is in the search bar
     const searchText = searchBar.value; 
 
+    // 2. Open the new tab IMMEDIATELY to bypass mobile pop-up blockers
+    const newTab = window.open('about:blank', '_blank');
+
     try {
-        // 3. Run your fetch function and wait for the manga ID
         const mangaID = await fetchData(searchText); 
         
         if (mangaID) {
-            // 5. Update the blank tab with the real Cubari URL
+            // 3. Update the blank tab with the real URL
             newTab.location.href = `https://cubari.moe/read/weebcentral/${mangaID}/`;
         } else {
-            // If the manga isn't found, close the tab and let the user know
+            // 4. Close the tab if nothing is found
             newTab.close();
             alert('Manga not found. Please try another search.');
         }
     } catch (error) {
-        newTab.close();
+        if (newTab) newTab.close();
         console.error('Search Handler Error:', error);
     }
 }
 
-// Attach the listener to the FORM submit event, not the button click
+// Attach the listener to the FORM submit event
 searchForm.addEventListener('submit', handleSearch);
