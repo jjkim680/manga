@@ -105,40 +105,64 @@ d3.json("manga_data.json").then(rawDictionary => {
 async function fetchData(query) {
     // Uses Weebcentral API to get mangaID from search query
     try {
-        const response = await fetch(`https://weebcentral.com/search/data?author=&text=${query}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display`)
-        if (!response.ok) throw new Error ('Request failed');
+        // Encode the query to handle spaces and special characters safely
+        const encodedQuery = encodeURIComponent(query);
+        const response = await fetch(`https://weebcentral.com/search/data?author=&text=${encodedQuery}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display`);
+        
+        if (!response.ok) throw new Error('Request failed');
         const htmlString = await response.text();
-        console.log(htmlString);
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlString, 'text/html');
 
-        const anchorTag = doc.querySelector('a');
+        // FIX 1: Find the specific container holding the series links to avoid picking up header/nav links
+        const anchorTag = doc.querySelector('a[href*="/series/"]');
 
-        const url = firstAnchor.getAttribute('href')
+        // FIX 2: Check if an anchor tag was actually found to prevent "cannot read properties of null" errors
+        if (!anchorTag) {
+            throw new Error("No manga links found in the search results.");
+        }
+
+        // FIX 3: Changed 'firstAnchor' to matches your defined variable 'anchorTag'
+        const url = anchorTag.getAttribute('href'); 
+        
+        if (!url) throw new Error("Link target is empty.");
+
         // https://weebcentral.com/series/01J76XYFPF0C74JMR2H1MTQ2MR/Look-Back
+        const urlParts = url.split("/");
+        
+        // The ID is the 5th element in a standard split array
+        const mangaID = urlParts[4]; 
 
-        const urlParts = url.split("/")
-        // ['https:', '', 'weebcentral.com', 'series', '01J76XYFPF0C74JMR2H1MTQ2MR', 'Look-Back']
+        if (!mangaID) throw new Error("Could not extract ID from URL structure.");
 
-        const mangaID = urlParts[4]
-        // "01J76XYFPF0C74JMR2H1MTQ2MR"
+        console.log(`Success! The extracted Manga ID is: ${mangaID}`);
+        
+        // Return it so you can use it in other functions
+        return mangaID;
 
-        console.log(`Success! The extracted Manga ID is: ${mangaID}`)
     } catch (error) {
-        console.error('Error:', error);
-        console.log("Could not find the manga link on this page.")
+        console.error('Error:', error.message);
+        console.log("Could not find the manga link on this page.");
     }  
 }
 
-// Identify HTML elements
-const searchBar = document.getElementById('searchBar');
-const searchButton = document.getElementById('searchButton');
 
-function handleSearch() {
-    // Extract the text that is in the search bar
+// Identify HTML elements (Added the form element)
+const searchForm = document.getElementById('searchForm');
+const searchBar = document.getElementById('searchBar');
+
+// Handle the search event safely
+function handleSearch(event) {
+    // 1. Prevent the form from reloading the page (fixes Enter key bug)
+    event.preventDefault(); 
+
+    // 2. Extract the text that is in the search bar
     const searchText = searchBar.value; 
+    
+    // 3. Run your fetch function
     fetchData(searchText); 
 }
 
-searchButton.addEventListener('click', handleSearch);
+// Attach the listener to the FORM submit event, not the button click
+searchForm.addEventListener('submit', handleSearch);
