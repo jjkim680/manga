@@ -101,3 +101,44 @@ d3.json("manga_data.json").then(rawDictionary => {
 }).catch(error => {
     console.error("Error loading manga_data.json:", error);
 });
+
+async function fetchData(query) {
+    // Uses Weebcentral API to get mangaID from search query
+    try {
+        const response = await fetch(`https://weebcentral.com/search/data?author=&text=${query}&sort=Best%20Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full%20Display`)
+        if (!response.ok) throw new Error ('Request failed');
+        const htmlString = await response.text();
+        console.log(htmlString);
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+
+        const anchorTag = doc.querySelector('a');
+
+        const url = firstAnchor.getAttribute('href')
+        // https://weebcentral.com/series/01J76XYFPF0C74JMR2H1MTQ2MR/Look-Back
+
+        const urlParts = url.split("/")
+        // ['https:', '', 'weebcentral.com', 'series', '01J76XYFPF0C74JMR2H1MTQ2MR', 'Look-Back']
+
+        const mangaID = urlParts[4]
+        // "01J76XYFPF0C74JMR2H1MTQ2MR"
+
+        console.log(`Success! The extracted Manga ID is: ${mangaID}`)
+    } catch (error) {
+        console.error('Error:', error);
+        console.log("Could not find the manga link on this page.")
+    }  
+}
+
+// Identify HTML elements
+const searchBar = document.getElementById('searchBar');
+const searchButton = document.getElementById('searchButton');
+
+function handleSearch() {
+    // Extract the text that is in the search bar
+    const searchText = searchBar.value; 
+    fetchData(searchText); 
+}
+
+searchButton.addEventListener('click', handleSearch);
