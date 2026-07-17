@@ -132,25 +132,18 @@ const searchBar = document.getElementById('searchBar');
 // 1. Add 'async' to the function so you can use 'await' inside it
 async function handleSearch(event) {
     event.preventDefault(); 
-
     const searchText = searchBar.value; 
-
-    // 2. Open the new tab IMMEDIATELY to bypass mobile pop-up blockers
-    const newTab = window.open('about:blank', '_blank');
 
     try {
         const mangaID = await fetchData(searchText); 
         
         if (mangaID) {
-            // 3. Update the blank tab with the real URL
-            newTab.location.href = `https://cubari.moe/read/weebcentral/${mangaID}/`;
+            // This will NEVER be blocked by a mobile browser
+            window.location.href = `https://cubari.moe/read/weebcentral/${mangaID}/`;
         } else {
-            // 4. Close the tab if nothing is found
-            newTab.close();
             alert('Manga not found. Please try another search.');
         }
     } catch (error) {
-        if (newTab) newTab.close();
         console.error('Search Handler Error:', error);
     }
 }
