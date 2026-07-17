@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Manga Map</title>
-    <style>
-        body { margin: 0; background-color: #1a1a1a; color: white; font-family: sans-serif; }
-        #chart-container { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .node { cursor: grab; stroke: #222; stroke-width: 2px; transition: filter 0.3s ease; }
-        .node:active { cursor: grabbing; }
-        .node:hover {
-            stroke: white; /* Highlights the bubble when hovering */
-            cursor: pointer; /* Changes the hand icon to a clicking pointer */
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Search Bar -->
     <form class="example" action="action_page.php">
         <input type="text" id="searchBar" placeholder="Search.." name="search">
