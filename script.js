@@ -150,3 +150,5 @@ async function handleSearch(event) {
 
 // Attach the listener to the FORM submit event
 searchForm.addEventListener('submit', handleSearch);
+
+alert("JavaScript loaded successfully!");
