@@ -119,8 +119,12 @@ async function fetchData(query) {
         
         console.log(`Success! Python extracted the Manga ID: ${mangaID}`);
         
-        // Move to your layout/chart logic
-        renderMangaData(mangaID);
+        // 1. Construct the secure Cubari reader URL using the mangaID
+        const cubariUrl = `https://cubari.moe/read/weebcentral/{mangaID}/`;
+        
+        // 2. Open the structured Cubari link directly in a new browser tab
+        window.open(cubariUrl, '_blank');
+        
         return mangaID;
 
     } catch (error) {
