@@ -4,3 +4,6 @@ __pycache__/
 *.pyc
 *.pyo
 venv/
+cron.log
+manga_data.json
+flask.log
