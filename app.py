@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Allows your frontend (even if it's on a different local port or domain) to communicate with this backend
 CORS(app) 
 
-@app.route('/api/search', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def search_manga():
     # 1. Grab the search query sent from your JavaScript search bar
     query = request.args.get('text', '')

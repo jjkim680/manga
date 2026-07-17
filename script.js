@@ -106,8 +106,8 @@ async function fetchData(query) {
     try {
         const encodedQuery = encodeURIComponent(query);
         
-        // Target your local Flask endpoint
-        const response = await fetch(`http://127.0.0{encodedQuery}`);
+        // A relative path will automatically use https://duckdns.org
+        const response = await fetch(`/api/search?text=${encodedQuery}`);
         
         if (!response.ok) {
             const errorData = await response.json();
