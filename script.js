@@ -156,7 +156,6 @@ function handleSearch(event) {
         console.error('Search Handler Error:', error);
     }
 }
-}
 
 // Attach the listener to the FORM submit event, not the button click
 searchForm.addEventListener('submit', handleSearch);
